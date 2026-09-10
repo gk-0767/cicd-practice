@@ -3,5 +3,5 @@ os: linux
 
 files
 - source:  app.py
-- desination: /ver/www/myapp
+- desination: /var/www/myapp
 
