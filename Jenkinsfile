@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -26,18 +25,31 @@ pipeline {
                 sh '.venv/bin/python -m pytest -v'
             }
         }
-               stage('Build Docker Image') {
+
+        stage('Build Docker Image') {
             steps {
                 sh 'docker build -t employee-service:1.0 .'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker rm -f employee-app || true
+                    docker run -d --name employee-app -p 5000:5000 employee-service:1.0
+                    sleep 3
+                    curl --fail http://localhost:5000/health
+                '''
+            }
+        }
     }
+
     post {
         success {
-            echo 'CI pipeline completed successfully!'
+            echo 'CI/CD pipeline completed successfully!'
         }
         failure {
-            echo 'CI pipeline failed. Check the Console Output.'
+            echo 'CI/CD pipeline failed. Check the Console Output.'
         }
     }
 }
