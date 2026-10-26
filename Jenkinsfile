@@ -53,3 +53,16 @@ pipeline {
         }
     }
 }
+
+        }
+    }
+
+    post {
+        success {
+            echo 'CI/CD pipeline completed successfully!'
+        }
+        failure {
+            echo 'CI/CD pipeline failed. Check the Console Output.'
+        }
+    }
+}
