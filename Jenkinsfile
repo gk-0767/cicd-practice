@@ -28,7 +28,7 @@ pipeline {
         }
                stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t employee-service:1.0 .'
+                sh 'docker build -t employee-service:1.0 .'
             }
         }
     }
