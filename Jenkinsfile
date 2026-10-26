@@ -26,8 +26,12 @@ pipeline {
                 sh '.venv/bin/python -m pytest -v'
             }
         }
+               stage('Build Docker Image') {
+            steps {
+                sh 'sudo docker build -t employee-service:1.0 .'
+            }
+        }
     }
-
     post {
         success {
             echo 'CI pipeline completed successfully!'
